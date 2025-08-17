@@ -1,0 +1,109 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '2.0.20'
+    id 'org.jetbrains.kotlin.plugin.spring' version '2.0.20'
+    id 'org.jlleitschuh.gradle.ktlint' version '12.1.0'
+    id 'application'
+}
+
+group = 'org.example'
+version = '1.0-SNAPSHOT'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Kotlin
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib:2.0.20'
+    
+    // Project Reactor BOM for version management
+    implementation platform('io.projectreactor:reactor-bom:2024.0.6')
+    
+    // Project Reactor dependencies
+    implementation 'io.projectreactor:reactor-core'
+    implementation 'io.projectreactor.kotlin:reactor-kotlin-extensions:1.2.2'
+    
+    // Test dependencies
+    testImplementation 'io.projectreactor:reactor-test'
+}
+
+// Configure Kotlin compilation
+tasks.withType(KotlinCompile) {
+    kotlinOptions {
+        freeCompilerArgs = ['-Xjsr305=strict']
+        jvmTarget = '17'
+    }
+}
+
+// Configure source sets for custom Kotlin directories
+sourceSets {
+    main {
+        kotlin {
+            srcDirs = ['src/main/kotlin']
+        }
+    }
+    test {
+        kotlin {
+            srcDirs = ['src/test/kotlin']
+        }
+    }
+}
+
+// Configure JAR task with manifest (equivalent to maven-jar-plugin configuration)
+jar {
+    archiveBaseName = 'reactor-sandbox'
+    manifest {
+        attributes(
+            'Implementation-Title': project.name,
+            'Implementation-Version': project.version,
+            'Implementation-Vendor': project.group
+        )
+    }
+}
+
+// Configure ktlint
+ktlint {
+    version = '0.50.0'
+    debug = false
+    verbose = true
+    android = false
+    outputToConsole = true
+    outputColorName = 'RED'
+    ignoreFailures = false
+}
+
+// Task equivalent to exec-maven-plugin for linting OpenAPI (currently skipped)
+tasks.register('lintOpenapi', Exec) {
+    group = 'verification'
+    description = 'Lint OpenAPI specifications'
+    commandLine 'sh', 'api/openapi/lint-openapi.sh'
+    ignoreExitValue = true // equivalent to <skip>true</skip>
+}
+
+// Task equivalent to maven-dependency-plugin for copying native dependencies
+tasks.register('copyNativeDeps', Copy) {
+    group = 'build'
+    description = 'Copy native dependencies for DynamoDBLocal'
+    from configurations.testRuntimeClasspath.filter { 
+        it.name.endsWith('.so') || it.name.endsWith('.dll') || it.name.endsWith('.dylib') 
+    }
+    into "${projectDir}/native-libs"
+}
+
+// Make copyNativeDeps run during test compilation
+tasks.named('testClasses') {
+    dependsOn 'copyNativeDeps'
+}
+
+// Configure test task
+test {
+    useJUnitPlatform()
+    systemProperty 'java.library.path', "${projectDir}/native-libs"
+}
