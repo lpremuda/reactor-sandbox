@@ -1,5 +1,6 @@
 package org.example
 
+import org.example.extensions.subscribeStandard
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Hooks
 import reactor.core.publisher.Mono
@@ -16,11 +17,7 @@ fun mapFlatmap() {
     fluxSource()
         .map { it.uppercase() } // FluxMap<>((FluxArray<>(array), onError), mapper))
         .flatMap { Mono.just(it + "-END") }
-        .subscribe(
-            { value -> println("onNext: $value") },
-            { error -> println("onError: $error") },
-            { println("onComplete") },
-        )
+        .subscribeStandard()
 }
 
 fun doOnNextMap() {
@@ -31,9 +28,5 @@ fun doOnNextMap() {
         .doOnNext { t -> println("doOnNext2: $t") }
         .map { it.uppercase() }
         .doOnComplete { println("doOnComplete3") }
-        .subscribe(
-            { value -> println("onNext: $value") },
-            { error -> println("onError: $error") },
-            { println("onComplete") },
-        )
+        .subscribeStandard()
 }

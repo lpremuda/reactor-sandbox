@@ -1,5 +1,6 @@
 package org.example
 
+import org.example.extensions.subscribeStandard
 import reactor.core.publisher.Flux
 import reactor.core.scheduler.Schedulers
 import java.time.Duration
@@ -16,11 +17,7 @@ fun main() {
         .doOnNext { log("doOnNext1: $it") }
         .collectList()
         .doOnNext { log("doOnNext2: $it") }
-        .subscribe(
-            { value -> log("onNext: $value") },
-            { error -> log("onError: $error") },
-            { log("onComplete") },
-        )
+        .subscribeStandard()
 }
 
 private fun randomDelay(): Duration {

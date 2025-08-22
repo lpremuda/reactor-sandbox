@@ -1,5 +1,6 @@
 package org.example
 
+import org.example.extensions.subscribeStandard
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import reactor.core.publisher.Signal
@@ -18,11 +19,7 @@ fun basic() {
             }
         }
         .contextWrite { Context.of("k", "downstream") }
-        .subscribe(
-            { value -> log("onNext: $value") },
-            { error -> log("onError: $error") },
-            { log("onComplete") },
-        )
+        .subscribeStandard()
 }
 
 fun multipleInnerSubscriptions() {
@@ -38,11 +35,7 @@ fun multipleInnerSubscriptions() {
                 .contextWrite { Context.of("k", "inner-$i") } // overrides for this inner
         }
         .contextWrite { Context.of("k", "outer") }
-        .subscribe(
-            { value -> log("onNext: $value") },
-            { error -> log("onError: $error") },
-            { log("onComplete") },
-        )
+        .subscribeStandard()
 }
 
 fun mdcLoggingExample() {
@@ -54,9 +47,5 @@ fun mdcLoggingExample() {
             }
         }
         .contextWrite { Context.of("requestId", "123") }
-        .subscribe(
-            { value -> log("onNext: $value") },
-            { error -> log("onError: $error") },
-            { log("onComplete") },
-        )
+        .subscribeStandard()
 }

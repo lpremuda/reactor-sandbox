@@ -1,5 +1,6 @@
 package org.example
 
+import org.example.extensions.subscribeStandard
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 
@@ -18,11 +19,7 @@ fun main() {
             println("onError2: $it")
         } // FluxPeek<>(FluxMap<>(FluxMap<>(FluxPeek<>(FluxArray<>(array), onError), mapper), mapper), onError)
         // "source"
-        .subscribe(
-            { value -> println("onNext: $value") },
-            { error -> println("onError: $error") },
-            { println("onComplete") },
-        )
+        .subscribeStandard()
     // subscribe(consumer, errorConsumer, completeConsumer)
     // subscribeWith(new LambdaSubscriber<>(consumer, errorConsumer, completeConsumer, null, initialContext))
     // subscribe(subscriber); return subscriber;
@@ -35,14 +32,6 @@ fun main() {
      * 	}
      *
      * 	s.onSubscribe(new ArraySubscription<>(s, array));
-     *
-     *
-     *
-     */
-
-    /**
-     *
-     *
      *
      */
 }
