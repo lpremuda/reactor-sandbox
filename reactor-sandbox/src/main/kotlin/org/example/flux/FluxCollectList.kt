@@ -1,6 +1,7 @@
-package org.example
+package org.example.flux
 
 import org.example.extensions.subscribeStandard
+import org.example.logging.log
 import reactor.core.publisher.Flux
 import reactor.core.scheduler.Schedulers
 import java.time.Duration

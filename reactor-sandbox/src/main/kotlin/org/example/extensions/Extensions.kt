@@ -1,6 +1,6 @@
 package org.example.extensions
 
-import org.example.log
+import org.example.logging.log
 import reactor.core.Disposable
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono

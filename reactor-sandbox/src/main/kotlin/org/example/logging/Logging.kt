@@ -6,6 +6,11 @@ import reactor.core.publisher.Mono
 import reactor.util.context.Context
 import kotlin.reflect.full.memberProperties
 
+fun log(message: String) {
+    val threadName: String = Thread.currentThread().name
+    println("[$threadName] $message")
+}
+
 data class MDCFields(
     val task: String? = null,
     val tid: String? = null,

@@ -1,4 +1,4 @@
-package org.example
+package org.example.flux
 
 import org.example.extensions.subscribeStandard
 import reactor.core.publisher.Flux

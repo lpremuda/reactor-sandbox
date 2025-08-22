@@ -1,4 +1,4 @@
-package org.example
+package org.example.mono
 
 import reactor.core.publisher.Mono
 
