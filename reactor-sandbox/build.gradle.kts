@@ -33,6 +33,10 @@ dependencies {
 	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
+	// Kotlin logging
+	implementation("io.github.microutils:kotlin-logging-jvm:3.0.5")
+	implementation("net.logstash.logback:logstash-logback-encoder:7.4")
+
 	// Project Reactor dependencies
 	implementation("io.projectreactor:reactor-core")
 	implementation("io.projectreactor.kotlin:reactor-kotlin-extensions:1.2.2")
