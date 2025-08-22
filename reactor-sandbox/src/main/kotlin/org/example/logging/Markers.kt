@@ -11,6 +11,9 @@ fun markerMap(map: Map<String, Any?>): LogstashMarker {
     return appendEntries(map)
 }
 
-fun markerMap(map: Map<String, Any?>, vararg pairs: Pair<String, Any?>): LogstashMarker {
+fun markerMap(
+    map: Map<String, Any?>,
+    vararg pairs: Pair<String, Any?>,
+): LogstashMarker {
     return appendEntries(map + mapOf(*pairs))
 }

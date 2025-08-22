@@ -11,15 +11,17 @@ fun main() {
 
 fun basic() {
     Flux.just("x")
-        .flatMap { v -> Mono.deferContextual {
-                ctx -> Mono.just(ctx.get<String>("k"))
-        }
+        .flatMap { v ->
+            Mono.deferContextual {
+                    ctx ->
+                Mono.just(ctx.get<String>("k"))
+            }
         }
         .contextWrite { Context.of("k", "downstream") }
         .subscribe(
             { value -> log("onNext: $value") },
             { error -> log("onError: $error") },
-            { log("onComplete") }
+            { log("onComplete") },
         )
 }
 
@@ -39,7 +41,7 @@ fun multipleInnerSubscriptions() {
         .subscribe(
             { value -> log("onNext: $value") },
             { error -> log("onError: $error") },
-            { log("onComplete") }
+            { log("onComplete") },
         )
 }
 
@@ -53,9 +55,8 @@ fun mdcLoggingExample() {
         }
         .contextWrite { Context.of("requestId", "123") }
         .subscribe(
-
             { value -> log("onNext: $value") },
             { error -> log("onError: $error") },
-            { log("onComplete") }
+            { log("onComplete") },
         )
 }

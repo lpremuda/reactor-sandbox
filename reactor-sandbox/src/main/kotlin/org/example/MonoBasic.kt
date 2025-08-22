@@ -8,6 +8,6 @@ fun main() {
         .subscribe(
             { value -> println("onNext: $value") },
             { error -> println("onError: $error") },
-            { println("onComplete") }
+            { println("onComplete") },
         )
 }

@@ -2,7 +2,6 @@ package org.example
 
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Hooks
-import reactor.core.publisher.Mono
 
 fun main() {
     Hooks.resetOnOperatorDebug()
@@ -14,7 +13,6 @@ fun main() {
         .subscribe(
             { value -> log("onNext: $value") },
             { error -> log("onError: $error") },
-            { log("onComplete") }
+            { log("onComplete") },
         )
 }
-

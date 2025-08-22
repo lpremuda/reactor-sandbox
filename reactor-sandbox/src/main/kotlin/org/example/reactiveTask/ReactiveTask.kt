@@ -7,16 +7,12 @@ import org.slf4j.MDC
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import java.util.*
-import java.util.function.Consumer
-
 
 object ReactiveTask {
-
     private const val TASK_STARTED = "Scheduled task started"
     private const val TASK_ENDED = "Scheduled task ended"
-    private const val TASK_COMPLETED_SUCCESSFULLY= "Scheduled task completed successfully"
+    private const val TASK_COMPLETED_SUCCESSFULLY = "Scheduled task completed successfully"
     private const val TASK_FAILED_WITH_EXCEPTION = "Scheduled task failed with exception"
-
 
     private val logger = KotlinLogging.logger {}
     private val startingMono: Mono<Void> = Mono.fromRunnable<Void> { logger.info(TASK_STARTED) }
@@ -34,11 +30,13 @@ object ReactiveTask {
         MDC.put("task", taskName)
         return startingMono.then(this)
             .doOnNext { _ -> onComplete() }
-            .doOnError{ throwable: Throwable -> logger.error(TASK_FAILED_WITH_EXCEPTION, throwable) }
+            .doOnError { throwable: Throwable -> logger.error(TASK_FAILED_WITH_EXCEPTION, throwable) }
             .doFinally { _ -> onFinally() }
-            .mdcWrite(MDCFields(
-                tid = MDC.get("tid"),
-                task = MDC.get("task"))
+            .mdcWrite(
+                MDCFields(
+                    tid = MDC.get("tid"),
+                    task = MDC.get("task"),
+                ),
             )
     }
 
@@ -48,11 +46,13 @@ object ReactiveTask {
         MDC.put("task", taskName)
         return startingMono.thenMany(this)
             .doOnComplete(onComplete)
-            .doOnError{ throwable: Throwable -> logger.error(TASK_FAILED_WITH_EXCEPTION, throwable) }
+            .doOnError { throwable: Throwable -> logger.error(TASK_FAILED_WITH_EXCEPTION, throwable) }
             .doFinally { _ -> onFinally }
-            .mdcWrite(MDCFields(
-                tid = MDC.get("tid"),
-                task = MDC.get("task"))
+            .mdcWrite(
+                MDCFields(
+                    tid = MDC.get("tid"),
+                    task = MDC.get("task"),
+                ),
             )
     }
 

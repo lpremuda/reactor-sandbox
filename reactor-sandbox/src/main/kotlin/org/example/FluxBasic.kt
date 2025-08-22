@@ -1,7 +1,6 @@
 package org.example
 
 import reactor.core.publisher.Flux
-import reactor.core.publisher.Hooks
 import reactor.core.publisher.Mono
 
 fun main() {
@@ -15,12 +14,14 @@ fun main() {
             it
         } // FluxMap<>(FluxMap<>(FluxPeek<>(FluxArray<>(array), onError), mapper), mapper)
         .flatMap { Mono.just(it) }
-        .doOnError { println("onError2: $it") } // FluxPeek<>(FluxMap<>(FluxMap<>(FluxPeek<>(FluxArray<>(array), onError), mapper), mapper), onError)
+        .doOnError {
+            println("onError2: $it")
+        } // FluxPeek<>(FluxMap<>(FluxMap<>(FluxPeek<>(FluxArray<>(array), onError), mapper), mapper), onError)
         // "source"
         .subscribe(
             { value -> println("onNext: $value") },
             { error -> println("onError: $error") },
-            { println("onComplete") }
+            { println("onComplete") },
         )
     // subscribe(consumer, errorConsumer, completeConsumer)
     // subscribeWith(new LambdaSubscriber<>(consumer, errorConsumer, completeConsumer, null, initialContext))

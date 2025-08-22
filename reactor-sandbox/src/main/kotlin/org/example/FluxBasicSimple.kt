@@ -19,7 +19,7 @@ fun mapFlatmap() {
         .subscribe(
             { value -> println("onNext: $value") },
             { error -> println("onError: $error") },
-            { println("onComplete") }
+            { println("onComplete") },
         )
 }
 
@@ -34,6 +34,6 @@ fun doOnNextMap() {
         .subscribe(
             { value -> println("onNext: $value") },
             { error -> println("onError: $error") },
-            { println("onComplete") }
+            { println("onComplete") },
         )
 }

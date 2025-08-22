@@ -7,9 +7,10 @@ import java.time.Duration
 
 private val logger = KotlinLogging.logger {}
 
-fun main () {
-    val source = Flux.just(1, 2, 3, 4)
-        .doOnNext { logger.info("doOnNext: $it") }
+fun main() {
+    val source =
+        Flux.just(1, 2, 3, 4)
+            .doOnNext { logger.info("doOnNext: $it") }
 
     source
         .withStandardLogging("myTask")
