@@ -1,8 +1,8 @@
 package org.example.reactiveTask
 
 import mu.KotlinLogging
-import org.example.logging.MDCFields
-import org.example.logging.mdcWrite
+import org.example.utils.MDCFields
+import org.example.utils.mdcWrite
 import org.slf4j.MDC
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono

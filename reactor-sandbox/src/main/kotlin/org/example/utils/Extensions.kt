@@ -1,12 +1,11 @@
-package org.example.extensions
+package org.example.utils
 
-import org.example.logging.log
 import reactor.core.Disposable
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import java.util.function.Consumer
 
-private fun <T> logOnNext(): Consumer<T> = Consumer { t -> log("onNext: $t") }
+fun <T> logOnNext(): Consumer<T> = Consumer { t -> log("onNext: $t") }
 
 private fun logOnError(): Consumer<Throwable> = Consumer { e -> log("onError: $e") }
 

@@ -1,6 +1,6 @@
 package org.example.flux
 
-import org.example.extensions.subscribeStandard
+import org.example.utils.subscribeStandard
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Hooks
 import reactor.core.publisher.Mono

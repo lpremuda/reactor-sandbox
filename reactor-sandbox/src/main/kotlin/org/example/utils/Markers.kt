@@ -1,4 +1,4 @@
-package org.example.logging
+package org.example.utils
 
 import net.logstash.logback.marker.LogstashMarker
 import net.logstash.logback.marker.Markers.appendEntries

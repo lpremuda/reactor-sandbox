@@ -1,7 +1,7 @@
 package org.example.flux
 
-import org.example.extensions.subscribeStandard
-import org.example.logging.log
+import org.example.utils.log
+import org.example.utils.subscribeStandard
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import reactor.core.publisher.Signal
